@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+        body {
+            background: linear-gradient(135deg, #007bff, #0056b3); /* Blue gradient background */
+            font-family: 'Roboto', sans-serif;
+            color: #333333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Ensure minimum viewport height */
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 90%;
+            max-width: 1200px;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+        }
+
+        .left-panel {
+            width: 30%;
+            background-color: #007bff; /* Blue background for left panel */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #ffffff;
+        }
+
+        .left-panel button {
+            padding: 15px 20px;
+            margin: 15px 0;
+            background-color: #0056b3; /* Darker blue button */
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .left-panel button:hover {
+            background-color: #004d99; /* Darker blue on hover */
+            transform: scale(1.05);
+        }
+
+        .right-panel {
+            width: 70%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .add-product-form {
+            width: 100%;
+            max-width: 800px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+        }
+
+        .form-column {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .form-group {
+            width: calc(50% - 10px); /* Adjust width of each column */
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 18px;
+            color: #333333;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            color: #333333;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #007bff; /* Blue outline on focus */
+        }
+
+        .add-product-form button {
+            width: 100%;
+            padding: 15px;
+            background-color: #007bff; /* Blue button */
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .add-product-form button:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left-panel">
+            <button onclick="window.location.href='/newproduct'"><i class="fas fa-plus-circle"></i> Add New Product</button>
+            <button onclick="window.location.href='/listallproduct'"><i class="fas fa-list"></i> List All Product</button>
+        </div>
+        <div class="right-panel">
+            <div class="add-product-form">
+                <h2>Add Product</h2>
+                <form th:action="@{/saveproduct}" th:object="${product}" method="post" enctype="multipart/form-data">
+                    <div class="form-column">
+                        <div class="form-group">
+                            <label for="productName">Product Name:</label>
+                            <input type="text" id="productName" th:field="*{productName}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="sellerId">Seller ID:</label>
+                            <input type="text" id="sellerId" th:field="*{sellerId}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="brandType">Brand Type:</label>
+                            <input type="text" id="brandType" th:field="*{brandType}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="catalogueStatus">Catalogue Status:</label>
+                            <input type="text" id="catalogueStatus" th:field="*{catalogueStatus}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="sellingAs">Selling As:</label>
+                            <input type="text" id="sellingAs" th:field="*{sellingAs}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="categoryName">Category Name:</label>
+                            <input type="text" id="categoryName" th:field="*{categoryName}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="model">Model:</label>
+                            <input type="text" id="model" th:field="*{model}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="hsnCode">HSN Code:</label>
+                            <input type="text" id="hsnCode" th:field="*{hsnCode}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="quantity">Quantity:</label>
+                            <input type="text" id="quantity" th:field="*{quantity}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="price">Price:</label>
+                            <input type="text" id="price" th:field="*{price}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="warranty">Warranty:</label>
+                            <input type="text" id="warranty" th:field="*{warranty}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="taxes">Taxes:</label>
+                            <input type="text" id="taxes" th:field="*{taxes}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="total">Total:</label>
+                            <input type="text" id="total" th:field="*{total}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="purchaseDate">Purchase Date:</label>
+                            <input type="date" id="purchaseDate" th:field="*{purchaseDate}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="report1">Report 1 (PDF):</label>
+                            <input type="file" id="report1" name="report1" accept=".pdf">
+                        </div>
+                        <div class="form-group">
+                            <label for="report2">Report 2 (PDF):</label>
+                            <input type="file" id="report2" name="report2" accept=".pdf">
+                        </div>
+                        <div class="form-group">
+                            <label for="image">Image (JPEG):</label>
+                            <input type="file" id="image" name="image" accept=".jpeg">
+                        </div>
+                    </div>
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

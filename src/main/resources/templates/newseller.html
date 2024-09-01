@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Seller</title>
+    <style>
+        body {
+            background-color: #000000;
+            font-family: Arial, sans-serif;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .form-container {
+            border: 2px solid #ffffff;
+            border-radius: 10px;
+            padding: 20px;
+        }
+        .form-container input[type="text"],
+        .form-container input[type="email"],
+        .form-container textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ffffff;
+            border-radius: 5px;
+            background-color: transparent;
+            color: #ffffff;
+        }
+        .form-container button {
+            padding: 10px 20px;
+            margin-top: 20px;
+            background-color: transparent;
+            color: #ffffff;
+            border: 2px solid #ffffff;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .form-container button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h2>Add New Seller</h2>
+            <form action="/savenewseller" method="post">
+                <label for="SellerId">Seller ID:</label>
+                <input type="text" id="SellerId" name="SellerId" required><br><br>
+                
+                <label for="CompanyName">Company Name:</label>
+                <input type="text" id="CompanyName" name="CompanyName" required><br><br>
+                
+                <label for="ContactNo">Contact No:</label>
+                <input type="text" id="ContactNo" name="ContactNo" required><br><br>
+                
+                <label for="EmailId">Email ID:</label>
+                <input type="email" id="EmailId" name="EmailId" required><br><br>
+                
+                <label for="Address">Address:</label>
+                <textarea id="Address" name="Address" required></textarea><br><br>
+                
+                <label for="MsmeVerified">MSME Verified:</label>
+                <input type="checkbox" id="MsmeVerified" name="MsmeVerified"><br><br>
+                
+                <label for="MSMERegistrationNo">MSME Registration No:</label>
+                <input type="text" id="MSMERegistrationNo" name="MSMERegistrationNo"><br><br>
+                
+                <label for="GSTIN">GSTIN:</label>
+                <input type="text" id="GSTIN" name="GSTIN" required><br><br>
+                
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+    </div>
+</body>
+</html>

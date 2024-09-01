@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logs List</title>
+    <style>
+        /* CSS styles for layout */
+        body {
+            background-color: #f4f4f9;
+            font-family: Arial, sans-serif;
+            color: #333333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+            padding-top: 20px;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px;
+            gap: 20px;
+            width: 90%;
+            max-width: 1200px;
+        }
+
+        .logs-container {
+            border: 1px solid #dddddd;
+            border-radius: 10px;
+            padding: 20px;
+            box-sizing: border-box;
+            width: 100%;
+            background-color: #ffffff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .logs-container h2 {
+            margin-top: 0;
+            color: #00aaff;
+        }
+
+        .logs-container table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .logs-container table th, .logs-container table td {
+            border: 1px solid #dddddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .logs-container table th {
+            background-color: #f4f4f9;
+        }
+
+        .logs-container table tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+
+        a:hover {
+            color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logs-container">
+            <h2>Logs List</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Table Name</th>
+                        <th>Action</th>
+                        <th>Timestamp</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Iterate over the last 5 logs entries -->
+                    <tr th:each="log, iterStat : ${logs}" >
+                        <td th:text="${log.id}">ID</td>
+                        <td th:text="${log.tableName}">Table Name</td>
+                        <td th:text="${log.action}">Action</td>
+                        <td th:text="${#dates.format(log.timestamp, 'yyyy-MM-dd HH:mm:ss')}">Timestamp</td>
+                        <td th:text="${log.details}">Details</td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="back-button" onclick="window.location.href='/admin-dashboard'">
+                <i class="fas fa-arrow-left"></i> Back to Admin Dashboard
+            </button>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f0f9ff, #cbebff);
+            font-family: 'Roboto', sans-serif;
+            color: #333333;
+            margin: 0;
+            padding: 0;
+            font-size: 16px;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header {
+            background-color: #007bff;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #ffffff;
+        }
+        header a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+        header a:hover {
+            color: #d3d3d3;
+        }
+        .content {
+            display: flex;
+            flex: 1;
+            padding: 20px;
+            justify-content: space-between;
+        }
+        .left-panel {
+            width: 20%;
+            background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 0;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        }
+        .left-panel button {
+            margin: 10px 0;
+            padding: 12px 30px;
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .left-panel button i {
+            margin-right: 10px;
+        }
+        .left-panel button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+        .right-panel {
+            flex: 1;
+            background: url('https://source.unsplash.com/random/1600x900') no-repeat center center;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .right-panel:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+        .welcome-text {
+            font-size: 48px;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 2s;
+            font-weight: 700;
+        }
+        .box-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .box {
+            background-color: rgba(0, 123, 255, 0.9);
+            border: 2px solid #ffffff;
+            border-radius: 15px;
+            padding: 20px;
+            width: 280px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            animation: fadeInUp 1s;
+            position: relative;
+            overflow: hidden;
+        }
+        .box:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255,255,255,0.2), rgba(255,255,255,0.1));
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .box:hover:before {
+            opacity: 1;
+        }
+        .box a {
+            color: inherit;
+            text-decoration: none;
+            display: block;
+            position: relative;
+            z-index: 2;
+        }
+        .box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            background-color: rgba(0, 123, 255, 1);
+        }
+        .box h3 {
+            margin: 0;
+            margin-bottom: 10px;
+            font-size: 24px;
+            font-weight: 700;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .box p {
+            font-size: 32px;
+            margin: 0;
+            font-weight: 700;
+            color: #ffffff;
+        }
+        footer {
+            background-color: #007bff;
+            padding: 10px 20px;
+            text-align: center;
+            color: #ffffff;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+            margin-top: auto;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .bar-graph {
+    margin-top: 10px;
+}
+
+.bar-wrapper {
+    display: flex;
+    align-items: center;
+    height: 20px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.bar {
+    height: 100%;
+    transition: width 0.5s ease;
+}
+
+.total-assets-bar {
+    background-color: #007bff; /* Blue color for total assets */
+}
+
+.expired-assets-bar {
+    background-color: #dc3545; /* Red color for expired assets */
+}
+
+.bar-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+}
+
+.bar-labels span {
+    flex: 1;
+    text-align: center;
+}
+
+.box:hover .bar {
+    width: 100%;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Admin Dashboard</h1>
+            <a href="/logout">Logout</a>
+        </header>
+        <div class="content">
+            <div class="left-panel">
+                <button onclick="window.location.href='/adduser'">
+                    <i class="fas fa-user-plus"></i>Add User
+                </button>
+                <button onclick="window.location.href='/employee'">
+                    <i class="fas fa-users"></i>Employee
+                </button>
+                <button onclick="window.location.href='/product'">
+                    <i class="fa fa-cart-arrow-down"></i>Product
+                </button>
+                <button onclick="window.location.href='/addasset'">
+                    <i class="fas fa-plus-circle"></i>Asset
+                </button>
+                <button onclick="window.location.href='/addlocation'">
+                    <i class="fas fa-map-marker-alt"></i>Department
+                </button>
+                <button onclick="window.location.href='/seller'">
+                    <i class="fas fa-user-shield"></i>Seller
+                </button>
+                <button onclick="window.location.href='/listassets'">
+                    <i class="fas fa-list"></i>All Asset
+                </button>
+                <button onclick="window.location.href='/log'">
+                    <i class="fas fa-history"></i>View Logs
+                </button>
+            </div>
+            <div class="right-panel">
+                <div class="welcome-text">Welcome Admin</div>
+                <div class="box-container">
+                    <div class="box">
+    <a href="/employee">
+        <i class="fas fa-users fa-3x"></i> <!-- Font Awesome icon -->
+        <h3>Number of Employees</h3>
+        <p th:text="${employeeCount}">0</p>
+    </a>
+</div>
+<div class="box">
+    <a href="/listassets">
+        <i class="fas fa-boxes fa-3x"></i> <!-- Font Awesome icon -->
+        <h3>Number of Assets</h3>
+        <p th:text="${assetCount}">0</p>
+    </a>
+</div>
+<div class="box">
+    <a href="/listlocation">
+        <i class="fas fa-map-marker-alt fa-3x"></i> <!-- Font Awesome icon -->
+        <h3>Number of Departments</h3>
+        <p th:text="${locationCount}">0</p>
+    </a>
+</div>
+<div class="box">
+    <a href="/assets-requiring-service">
+        <i class="fas fa-tools fa-3x"></i> <!-- Font Awesome icon -->
+        <h3>Assets Requiring Servicing</h3>
+        <p th:text="${serviceRequiredCount}">0</p>
+    </a>
+</div>
+<div class="box">
+    <a href="/listwarranty">
+        <i class="fas fa-calendar-times fa-3x"></i> <!-- Font Awesome icon -->
+        <h3>Warranty Expired</h3>
+        <p th:text="${warrantyExpiredCount}">0</p>
+        <div class="bar-graph">
+            <div class="bar-wrapper">
+                <div class="bar total-assets-bar" style="width: 70%;"></div>
+                <div class="bar expired-assets-bar" style="width: 30%;"></div>
+            </div>
+            <div class="bar-labels">
+                <span>Total Assets</span>
+                <span>Expired Assets</span>
+            </div>
+        </div>
+    </a>
+</div>
+
+    </a>
+</div>
+                </div>
+            </div>
+        </div>
+        <footer>
+            &copy; 2024.
+        </footer>
+    </div>
+</body>
+</html>

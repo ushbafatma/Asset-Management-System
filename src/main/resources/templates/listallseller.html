@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            font-family: 'Roboto', sans-serif;
+            color: #333333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .header img {
+            height: 50px;
+            margin-right: 20px;
+        }
+
+        .header h2 {
+            font-size: 36px;
+            color: #333333;
+            animation: fadeInDown 1s;
+        }
+
+        #search-bar {
+            width: calc(100% - 120px);
+            padding: 15px;
+            margin: 20px 0;
+            box-sizing: border-box;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            background-color: #ffffff;
+            color: #333333;
+            transition: border-color 0.3s;
+        }
+
+        #search-bar:focus {
+            border-color: #999;
+            outline: none;
+        }
+
+        button {
+            padding: 15px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-left: -4px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            animation: fadeInUp 1s;
+        }
+
+        th, td {
+            padding: 15px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #007bff;
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #e9f1f7;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+            transition: color 0.3s;
+            margin-right: 10px;
+        }
+
+        a:hover {
+            color: #0056b3;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Button container for a better UI */
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        /* Form container for better alignment */
+        .form-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo {
+            width: 150px;
+        }
+        .header i {
+            font-size: 48px;
+            margin-right: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <i class="fas fa-users"></i>
+            <h2>Seller List</h2>
+        </div>
+        <div class="form-container">
+            <form action="/employees/search" method="get" style="width: 100%; display: flex;">
+                <input type="text" id="search-bar" name="emp_id" placeholder="Search by Seller ID" required>
+                <button type="submit"><i class="fas fa-search"></i> Search</button>
+            </form>
+        </div>
+        <div class="form-container">
+            <form action="/sellers/upload" method="post" enctype="multipart/form-data" style="display: inline;">
+                <input type="file" name="file" accept=".csv" required>
+                <button type="submit" class="btn"><i class="fas fa-upload"></i> Upload CSV</button>
+            </form>
+        </div>
+        <table>
+    <thead>
+        <tr>
+            <th>Seller ID</th>
+            <th>Company Name</th>
+            <th>Contact No</th>
+            <th>Email Id</th>
+            <th>Address</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="seller : ${sellers}">
+            <td th:text="${seller.sellerId}">Seller ID</td>
+            <td th:text="${seller.companyName}">Company Name</td>
+            <td th:text="${seller.contactNo}">Contact No</td>
+            <td th:text="${seller.emailId}">Email Id</td>
+            <td th:text="${seller.address}">Address</td>
+            <td>
+                <a th:href="@{/seller/{SellerId}/edit(SellerId=${seller.sellerId})}" style="margin-right: 5px;"><i class="fas fa-edit"></i> Edit</a>
+                <a th:href="@{/seller/{SellerId}/delete(SellerId=${seller.sellerId})}" style="color: red;"><i class="fas fa-trash-alt"></i> Delete</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<button class="back-button" onclick="window.location.href='/admin-dashboard'">
+                <i class="fas fa-arrow-left"></i> Back to Admin Dashboard
+            </button>
+    </div>
+</body>
+</html>

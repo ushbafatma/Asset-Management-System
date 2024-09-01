@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expired Warranties</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            background: #f0f9ff;
+            font-family: 'Roboto', sans-serif;
+            color: #333333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #dddddd;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        a:hover {
+            color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Assets with Expired Warranty</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Model</th>
+                    <th>Purchase Date</th>
+                    <th>Quantity</th>
+                    <th>Warranty (Years)</th>
+                    <th>Seller ID</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="product : ${expiredProducts}">
+                    <td th:text="${product.productName}"></td>
+                    <td th:text="${product.model}"></td>
+                    <td th:text="${product.purchaseDate}"></td>
+                    <td th:text="${product.quantity}"></td>
+                    <td th:text="${product.warranty}"></td>
+                    <td th:text="${product.sellerId}"></td>
+                </tr>
+            </tbody>
+        </table>
+        <a href="/admin-dashboard">Back to Dashboard</a>
+    </div>
+</body>
+</html>

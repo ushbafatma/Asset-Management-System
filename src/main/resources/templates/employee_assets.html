@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assets List</title>
+    <style>
+        /* CSS styles for layout */
+        body {
+            background-color: #f4f4f9;
+            font-family: Arial, sans-serif;
+            color: #333333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+            padding-top: 20px;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px;
+            gap: 20px;
+            width: 90%;
+            max-width: 1200px;
+        }
+
+        .assets-container {
+            border: 1px solid #dddddd;
+            border-radius: 10px;
+            padding: 20px;
+            box-sizing: border-box;
+            width: 100%;
+            background-color: #ffffff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .assets-container h2 {
+            margin-top: 0;
+            color: #00aaff;
+        }
+
+        .assets-container table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .assets-container table th, .assets-container table td {
+            border: 1px solid #dddddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .assets-container table th {
+            background-color: #f4f4f9;
+        }
+
+        .assets-container table tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .download-buttons {
+            margin-bottom: 20px;
+        }
+
+        .download-buttons a {
+            text-decoration: none;
+            color: #ffffff;
+            background-color: #00aaff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .download-buttons a:hover {
+            background-color: #0088cc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="assets-container">
+            <h2>Assets List</h2>
+            <div class="download-buttons">
+                <a href="/downloadassets" class="btn btn-primary">Download CSV</a>
+                <a href="/downloadassets/pdf" class="btn btn-primary">Download PDF</a>
+            </div>
+            <!-- Table to display existing assets -->
+            <table>
+                <thead>
+                    <tr>
+                        <th>Asset ID</th>
+                        <th>Product ID</th>
+                        <th>Product Name</th>
+                        <th>Employee ID</th>
+                        <th>Employee Name</th>
+                        <th>Location ID</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Iterate over list of assets and display each asset -->
+                    <tr th:each="asset : ${assets}">
+                        <td th:text="${asset.assetId}">Asset ID</td>
+                        <td th:text="${asset.product.productId}">Product ID</td>
+                        <td th:text="${asset.product.productName}">Product Name</td>
+                        <td th:text="${asset.employee.employeeId}">Employee ID</td>
+                        <td th:text="${asset.employee.name}">Employee Name</td>
+                        <td th:text="${asset.locationId}">Location ID</td>
+                        <td th:text="${asset.status}">Status</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <button class="back-button" onclick="window.location.href='/admin-dashboard'">
+                <i class="fas fa-arrow-left"></i> Back to Admin Dashboard
+            </button>
+    </div>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Manage Assets</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            background-color: #f0f0f0; /* Light gray background */
+            font-family: 'Roboto', sans-serif;
+            color: #333333; /* Dark text color */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            display: flex;
+            width: 90%;
+            height: 90%;
+            max-width: 1200px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Soft shadow */
+        }
+        .left-panel {
+            width: 30%;
+            background-color: #007bff; /* Blue background for left panel */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .left-panel button {
+            padding: 15px 20px;
+            margin: 15px 0;
+            background-color: #0056b3; /* Darker blue button */
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            width: 80%;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            text-align: left; /* Align text to the left */
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .left-panel button i {
+            margin-right: 10px;
+        }
+        .left-panel button:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+            transform: scale(1.05);
+        }
+        .right-panel {
+            width: 70%;
+            background-color: #ffffff; /* White background for right panel */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            color: #333333; /* Dark text color */
+            text-align: center;
+            padding: 20px;
+        }
+        .right-panel .welcome-text {
+            font-size: 48px;
+            margin-bottom: 20px;
+            font-family: 'Montserrat', sans-serif;
+            color: #007bff; /* Blue color for header */
+        }
+        .right-panel p {
+            font-size: 18px;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        .right-panel .icon {
+            font-size: 100px;
+            margin-top: 20px;
+            color: #007bff; /* Blue color for icon */
+        }
+        .back-button {
+            margin-top: 20px;
+            background-color: #007bff; /* Blue button background */
+            color: #ffffff; /* White text color */
+            border: none;
+            border-radius: 5px;
+            padding: 15px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 80%;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .back-button i {
+            margin-right: 10px;
+        }
+        .back-button:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left-panel">
+            <button onclick="window.location.href='/newlocation'">
+                <i class="fas fa-plus-circle"></i> Add New Department
+            </button>
+            <button onclick="window.location.href='/listlocation'">
+                <i class="fas fa-list"></i> List All Departments
+            </button>
+            <button class="back-button" onclick="window.location.href='/admin-dashboard'">
+                <i class="fas fa-arrow-left"></i> Back to Admin Dashboard
+            </button>
+        </div>
+        <div class="right-panel">
+            <div class="welcome-text">Manage Department</div>
+            <p>Welcome to the Admin panel. Here you can manage all your departments efficiently. Use the options on the left to add new departments or list all existing ones.</p>
+            <i class="fas fa-map-marked-alt icon"></i>
+        </div>
+    </div>
+</body>
+</html>

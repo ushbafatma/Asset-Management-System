@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            font-family: 'Roboto', sans-serif;
+            color: #333333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .header .logo {
+            font-size: 36px;
+            color: #007bff;
+            margin-right: 10px;
+        }
+
+        .header h2 {
+            font-size: 36px;
+            color: #333333;
+            animation: fadeInDown 1s;
+            margin: 0;
+        }
+
+        .back-button {
+            padding: 12px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+
+        .form-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        #search-bar {
+            width: calc(100% - 150px);
+            padding: 15px;
+            margin: 20px 0;
+            box-sizing: border-box;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            background-color: #ffffff;
+            color: #333333;
+            transition: border-color 0.3s;
+        }
+
+        #search-bar:focus {
+            border-color: #999;
+            outline: none;
+        }
+
+        button {
+            padding: 15px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-left: -4px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .bulk-upload-container {
+            margin-top: 20px;
+        }
+
+        .bulk-upload-container form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .bulk-upload-container input[type="file"] {
+            margin-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            animation: fadeInUp 1s;
+        }
+
+        th, td {
+            padding: 15px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #007bff;
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #e9f1f7;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+            transition: color 0.3s;
+            margin-right: 10px;
+        }
+
+        a:hover {
+            color: #0056b3;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-body {
+            position: relative;
+        }
+
+        .loader {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+        }
+
+        .error-message {
+            display: none;
+            color: red;
+            font-weight: bold;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <span class="logo"><i class="fas fa-cube"></i></span>
+        <h2>Product List</h2>
+        <button class="back-button" onclick="window.location.href='/admin-dashboard'">
+            <i class="fas fa-arrow-left"></i> Back to Admin Dashboard
+        </button>
+    </div>
+    <div class="form-container">
+        <form th:action="@{/product/search}" method="get">
+            <input type="text" id="search-bar" name="keyword" placeholder="Search by product name or ID" th:value="${keyword}">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+    <div class="bulk-upload-container">
+        <form th:action="@{/product/bulk-upload}" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" accept=".csv">
+            <button type="submit">Upload CSV</button>
+        </form>
+    </div>
+    <table>
+        <thead>
+        <tr>
+            <th>Product ID</th>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Report</th>
+            <th>Image</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="product : ${products}">
+            <td th:text="${product.productId}">Product ID</td>
+            <td th:text="${product.productName}">Product Name</td>
+            <td>
+                <a th:href="@{/product/presentIn/{productId}(productId=${product.productId})}" th:text="${product.quantity}">Product Quantity</a>
+            </td>
+            <td>
+                <a href="#" th:onclick="'viewReport('+${product.productId}+');'" style="margin-right: 5px;"><i class="fas fa-file-alt"></i> View Report</a>
+                <!-- <a th:href="@{/product/report/{productId}(productId=${product.productId})}">Download Report</a>-->
+            </td>
+            <td>
+                <a href="#" th:onclick="'viewImage('+${product.productId}+');'">View Image</a>
+                <!--<a th:href="@{/product/image/{productId}(productId=${product.productId})}">Download Image</a>-->
+            </td>
+            <td>
+                <a th:href="@{/product/edit/{productId}(productId=${product.productId})}" style="margin-right: 5px;"><i class="fas fa-edit"></i> Edit</a>
+                <a th:href="@{/product/{productId}/delete(productId=${product.productId})}" style="color: red;"><i class="fas fa-trash-alt"></i> Delete</a>
+                <a th:href="@{/product/{productId}/generate-pdf(productId=${product.productId})}" style="color: green;"><i class="fas fa-file-pdf"></i> Generate PDF</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Report Modal -->
+<div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="reportModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="reportModalLabel">Product Report</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="reportLoader" class="loader text-center">
+                    <i class="fas fa-spinner fa-spin"></i> Loading...
+                </div>
+                <iframe id="reportFrame" style="width: 100%; height: 500px;" frameborder="0"></iframe>
+                <div id="reportError" class="error-message">Error loading report. Please try again later.</div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Image Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModalLabel">Product Image</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <img id="productImage" style="width: 100%;" src="" alt="Product Image">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    function viewReport(productId) {
+        $('#reportLoader').show();
+        $('#reportFrame').hide();
+        $('#reportError').hide();
+
+        const url = '/product/report/' + productId;
+        fetch(url)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.blob();
+            })
+            .then(blob => {
+                const objectUrl = URL.createObjectURL(blob);
+                $('#reportFrame').attr('src', objectUrl);
+                $('#reportLoader').hide();
+                $('#reportFrame').show();
+            })
+            .catch(error => {
+                $('#reportLoader').hide();
+                $('#reportError').show();
+                console.error('There has been a problem with your fetch operation:', error);
+            });
+
+        $('#reportModal').modal('show');
+    }
+
+    function viewImage(productId) {
+        const url = '/product/image/' + productId;
+        $('#productImage').attr('src', url); // Set the image source correctly
+        $('#imageModal').modal('show'); // Show the modal
+    }
+
+</script>
+</body>
+</html>

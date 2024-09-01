@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assets List</title>
+    <style>
+        /* CSS styles for layout */
+        body {
+            background-color: #f4f4f9;
+            font-family: Arial, sans-serif;
+            color: #333333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+            padding-top: 20px;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px;
+            gap: 20px;
+            width: 90%;
+            max-width: 1200px;
+        }
+
+        .assets-container {
+            border: 1px solid #dddddd;
+            border-radius: 10px;
+            padding: 20px;
+            box-sizing: border-box;
+            width: 100%;
+            background-color: #ffffff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .assets-container h2 {
+            margin-top: 0;
+            color: #00aaff;
+        }
+
+        .assets-container .download-buttons {
+            margin-bottom: 15px;
+        }
+
+        .assets-container .btn {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            margin-right: 10px;
+        }
+
+        .assets-container .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .assets-container .servicing-form {
+            display: inline;
+        }
+
+        .assets-container .servicing-form button {
+            background-color: #ff7f50;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .assets-container .servicing-form button:hover {
+            background-color: #ff4500;
+        }
+
+        .assets-container table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .assets-container table th, .assets-container table td {
+            border: 1px solid #dddddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .assets-container table th {
+            background-color: #f4f4f9;
+        }
+
+        .assets-container table tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .assets-container table tbody .warranty-expired {
+            background-color: #ffcccc;
+            color: red;
+            font-weight: bold;
+        }
+
+        .assets-container table tbody .warranty-valid {
+            background-color: #ccffcc;
+            color: green;
+            font-weight: bold;
+        }
+
+        .assets-container .expired-count {
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: red;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+
+        a:hover {
+            color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="assets-container">
+            <h2>Assets List</h2>
+            <div class="download-buttons">
+                <a href="/downloadasset" class="btn">Download CSV</a>
+                <a href="/downloadasset/pdf" class="btn">Download PDF</a>
+                <form action="/assets/upload" method="post" enctype="multipart/form-data" style="display: inline;">
+                    <input type="file" name="file" accept=".csv" required>
+                    <button type="submit" class="btn">Upload CSV</button>
+                </form>
+            </div>
+            <!-- Display count of expired warranties -->
+            <div class="expired-count" th:if="${expiredProducts != null}">
+                Total Expired : <span th:text="${expiredProducts.size()}"></span>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Serial No.</th>
+                        <th>Asset ID</th>
+                        <th>Product ID</th>
+                        <th>Asset Serial Number</th>
+                        <th>Product Name</th>
+                        <th>Employee ID</th>
+                        <th>Employee Name</th>
+                        <th>Location ID</th>
+                        <th>Status</th>
+                        <th>Warranty</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="asset, index : ${assets}">
+                        <td th:text="${index.index + 1}">Serial No.</td>
+                        <td th:text="${asset.assetId}">Asset ID</td>
+                        <td th:text="${asset.product.productId}">Product ID</td>
+                        <td th:text="${asset.serialNumber}">Product ID</td>
+                        <td th:text="${asset.product.productName}">Product Name</td>
+                        <td th:text="${asset.employee != null ? asset.employee.employeeId : 'N/A'}">Employee ID</td>
+                        <td th:text="${asset.employee != null ? asset.employee.name : 'N/A'}">Employee Name</td>
+                        <td th:text="${asset.locationId}">Location ID</td>
+                        <td th:text="${asset.status}">Status</td>
+                        <td th:class="${expiredProducts != null and expiredProducts.contains(asset.product)} ? 'warranty-expired' : 'warranty-valid'">
+                            <span th:if="${expiredProducts != null and expiredProducts.contains(asset.product)}">Warranty Expired</span>
+                            <span th:unless="${expiredProducts != null and expiredProducts.contains(asset.product)}">Warranty Valid</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="back-button" onclick="window.location.href='/admin-dashboard'">
+                <i class="fas fa-arrow-left"></i> Back to Admin Dashboard
+            </button>
+        </div>
+    </div>
+</body>
+</html>
